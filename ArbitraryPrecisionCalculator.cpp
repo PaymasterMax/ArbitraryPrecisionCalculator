@@ -314,7 +314,7 @@ std::string ArbitraryPrecisionCalculator::division(std::string numerator, std::s
             count++;
         }
 
-        quotient += std::string(1,count);  // concatnate count to quotient
+        quotient += std::to_string(count);  // concatenate count to quotient
     }
 
     // Remove leading zeros in the result
