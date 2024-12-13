@@ -249,7 +249,7 @@ std::string ArbitraryPrecisionCalculator::multiplication (std::string& num1, std
 }
 
 
-std::string ArbitraryPrecisionCalculator::factorial(std::string num){
+std::string ArbitraryPrecisionCalculator::factorial(std::string & num){
     std::string result = "1"; // starting value for results to avoid making the factorial multiplication results to 0
     std::string decrement_value = "1";
 
@@ -264,7 +264,7 @@ std::string ArbitraryPrecisionCalculator::factorial(std::string num){
     return result;
 }
 
-std::string ArbitraryPrecisionCalculator::exponentiation(std::string exp_base, std::string exponent){
+std::string ArbitraryPrecisionCalculator::exponentiation(std::string & exp_base, std::string & exponent){
     // general cases
     // any number with base as 0 is always is awlays 0
     if(exp_base == "0")
@@ -292,7 +292,7 @@ std::string ArbitraryPrecisionCalculator::exponentiation(std::string exp_base, s
     return results;
 }
 
-std::string ArbitraryPrecisionCalculator::division(std::string numerator, std::string denominator){
+std::string ArbitraryPrecisionCalculator::division(std::string& numerator, std::string & denominator){
 
     // handle edge case
     if(denominator == "0") throw std::invalid_argument("Division by 0 Error");
@@ -320,6 +320,22 @@ std::string ArbitraryPrecisionCalculator::division(std::string numerator, std::s
     // Remove leading zeros in the result
     return remove_leading_zeros(quotient);
 
+}
+
+std::string ArbitraryPrecisionCalculator::modulo(std::string& numerator, std::string &denominator){
+    if (denominator == "0") throw std::invalid_argument("Division error: Division by 0");
+    if (numerator == "0") return "0";
+    if (compare(numerator, denominator) < 0) return numerator;  // Divisor > numerator
+
+    std::string current = "";
+    for (char digit : numerator) {
+        current += digit;  // Append next digit
+        while (compare(current, denominator) >= 0) {
+            current = this->subtraction(current, denominator);
+        }
+    }
+
+    return remove_leading_zeros(current);
 }
 
 std::string ArbitraryPrecisionCalculator::consumeHandleOps(std::deque<std::string>& tokens){
@@ -350,6 +366,9 @@ std::string ArbitraryPrecisionCalculator::consumeHandleOps(std::deque<std::strin
 
             if(ops == "/")
                 single_arithma.push_back (this->division(num1, num2));
+
+            if(ops == "%")
+                single_arithma.push_back (this->modulo(num1, num2));
 
 
         }

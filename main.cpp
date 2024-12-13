@@ -52,7 +52,7 @@ int main()
     // REPL MyREPL;
     Tokenizer *mytokenizer = new Tokenizer(target_ops);
 
-    std::deque<std::string> tokens = mytokenizer->inputParser("32/4");
+    std::deque<std::string> tokens = mytokenizer->inputParser("5%3");
     // 308*245
         // deque<string> tokens = mytokenizer->inputParser ("30-5-6");
 
