@@ -434,20 +434,55 @@ std::string ArbitraryPrecisionCalculator::modulo(std::string& numerator, std::st
 // consumer method handler
 std::string ArbitraryPrecisionCalculator::consumeHandleOps(std::deque<std::string>& tokens){
     // initialize the single_arithmethic portion to a dequeue
-    std::deque<std::string> single_arithma = {};
+    std::deque<std::string> single_arithma = tokens; //{};
 
     // iterate through the tokens deque received
-    for(auto& curr_token: tokens){
-        // push the current token to the single_arithma deque.
-        single_arithma.push_back(curr_token);
+    // for(auto& curr_token: tokens){
+    //     // push the current token to the single_arithma deque.
+    //     single_arithma.push_back(curr_token);
 
-        // operations with 3 operands
+    //     // operations with 3 operands
+    //     if(single_arithma.size() == 3){
+
+    //         std::string num1 = pop_and_return (single_arithma);
+    //         std::string ops = pop_and_return (single_arithma);
+    //         std::string num2 = pop_and_return (single_arithma);
+
+    //         if(ops == "+")
+    //             single_arithma.push_back (this->addition (num1, num2));
+
+    //         if(ops == "-")
+    //             single_arithma.push_back (this->subtraction(num1, num2));
+
+    //         if(ops == "*")
+    //             single_arithma.push_back (this->multiplication(num1, num2));
+
+    //         if(ops == "^")
+    //             single_arithma.push_back (this->exponentiation(num1, num2));
+
+    //         if(ops == "/")
+    //             single_arithma.push_back (this->division(num1, num2));
+
+    //         if(ops == "%")
+    //             single_arithma.push_back (this->modulo(num1, num2));
+    //     }
+
+        // operations with 2 operands
+        // else if(single_arithma.size () == 2){
+        //     std::string num1 = pop_and_return (single_arithma);
+        //     std::string ops = pop_and_return (single_arithma);
+
+        //     if(ops == "!")
+        //         single_arithma.push_back (this->factorial(num1));
+
+        // }
+    // }
+
         if(single_arithma.size() == 3){
 
             std::string num1 = pop_and_return (single_arithma);
             std::string ops = pop_and_return (single_arithma);
             std::string num2 = pop_and_return (single_arithma);
-
 
             if(ops == "+")
                 single_arithma.push_back (this->addition (num1, num2));
@@ -471,15 +506,14 @@ std::string ArbitraryPrecisionCalculator::consumeHandleOps(std::deque<std::strin
         }
 
         // operations with 2 operands
-        // else if(single_arithma.size () == 2){
-        //     std::string num1 = pop_and_return (single_arithma);
-        //     std::string ops = pop_and_return (single_arithma);
+        else if(single_arithma.size () == 2){
+            std::string num1 = pop_and_return (single_arithma);
+            std::string ops = pop_and_return (single_arithma);
 
-        //     if(ops == "!")
-        //         single_arithma.push_back (this->factorial(num1));
+            if(ops == "!")
+                single_arithma.push_back (this->factorial(num1));
 
-        // }
-    }
+        }
 
     if(single_arithma.size ()>1)
         return this->consumeHandleOps (single_arithma);
