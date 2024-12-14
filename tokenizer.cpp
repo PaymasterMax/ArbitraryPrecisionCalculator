@@ -1,9 +1,10 @@
-#include <string>
+#include <unordered_set>
 #include "tokenizer.h"
 #include <deque>
+#include <string>
 #include <regex>
 
-Tokenizer::Tokenizer(std::deque<char> target_ops) {
+Tokenizer::Tokenizer(std::unordered_set<char> target_ops) {
     this->target_ops = target_ops;
 }
 
@@ -43,6 +44,3 @@ std::deque<std::string> Tokenizer::inputParser(const std::string& input){
 
     return tokens;
 }
-
-
-
