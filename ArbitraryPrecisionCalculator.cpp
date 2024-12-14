@@ -147,7 +147,9 @@ std::string ArbitraryPrecisionCalculator::subtraction(std::string& num1, std::st
 
     // return the result after reversing it, the numbers are worked on from the reverse order.
     // since the natural order of the numbers is from left to right, we need to reverse the result
-    return strRev (results);
+    // and remove leading zeros.
+    return remove_leading_zeros(
+        strRev(results));
 }
 
 std::string ArbitraryPrecisionCalculator::multiplication (std::string& num1, std::string& num2){
@@ -256,19 +258,6 @@ std::string ArbitraryPrecisionCalculator::multiplication (std::string& num1, std
         // get the size of the current_res_no_length
         const int curr_no_length = curr_res.size();
 
-        // if(tmp_res.at (0)-'0'== 0){
-
-            // std::cout<<curr_res<<std::endl;
-            // tmp_res = curr_res;
-            // continue;
-        // }
-
-        // std::cout<<"Tmp res: "<<tmp_res<<" Curr res: "<<curr_res<<std::endl;
-
-        // tmp_res = tmp_res_no_length<curr_no_length ?
-        //               paddWithZeros(tmp_res, curr_no_length -  tmp_res_no_length) :
-        //               tmp_res;
-
     // check if the index of the current iteration is not 0, if it's not zero, carry out the addition.
         if(i != 0)
         // first padd the numbers with zeros since in multiplication
@@ -279,11 +268,6 @@ std::string ArbitraryPrecisionCalculator::multiplication (std::string& num1, std
         3 2 3 8
          */
             curr_res = paddWithZeros(curr_res, i);
-
-        // std::cout<<curr_res<<" "<<std::endl;
-
-
-        // std::cout<<"";
 
     // perform the addition and append the result to tmp_res for next iteration addition
         tmp_res = this->addition (
@@ -300,33 +284,37 @@ std::string ArbitraryPrecisionCalculator::multiplication (std::string& num1, std
 
 // factorial method
 std::string ArbitraryPrecisionCalculator::factorial(std::string & num){
+    if(num.size() == 1 && num.at(0)- '0' < 1)
+        return "1";
 
     // factorial is a special case of multiplication.
     // if given 5!, that implies that 5*4*3*2*1.
     // so we can use the multiplication method to calculate the factorial.
 
-    // starting value for results to avoid making the factorial multiplication results to 0
-    std::string result = "1";
     // define the decrement value to one.
     // This will be used to decrement the number in each iteration.
     std::string decrement_value = "1";
 
-    // iterate through untill the value of num is equal to zero
-    while (num != "0") {
-        // Multiply previous results by num
-        result = this->multiplication(result, num);
+    std::string curr_num = this->subtraction(num, decrement_value);
 
-        // Decrement num and reassign it to itself till it gets to 0, where the loop breaks out.
-        num = this->subtraction (num, decrement_value);
-    }
+    std::cout <<"Curr: "<<curr_num << std::endl;
 
-// return the results
-    return result;
+    // store the output of the rest of the other factorials smaller than the current number
+    std::string down_tree_fact = this->factorial(
+        curr_num
+        );
+
+
+    // return the results of the multiplication of rest of factorials by current number.
+    return this->multiplication(
+        down_tree_fact,
+        num
+        );
 }
 
 std::string ArbitraryPrecisionCalculator::exponentiation(std::string & exp_base, std::string & exponent){
     // exponentiation is a special case of multiplication.
-    // if given 2^5, that implies that 2*2*2*2
+    // if given 2^5, that implies that 2*2*2*2 * 2
     // so we can use the multiplication method to calculate the exponentiation.
 
     // define the general cases
@@ -338,24 +326,24 @@ std::string ArbitraryPrecisionCalculator::exponentiation(std::string & exp_base,
     if(exponent == "0")
         return "1";
 
-    // initial the results to be 1 to prevent from making the overall result to zero since (any-number * 0 = 0)
-    std::string results = "1";
-
-    // define the decrement value
+        // define the decrement value
     std::string exp_decrement_value = "1";
 
-    // loop till the exponent is 0
-    while (exponent != "0") {
-        // multiply the results by the base untill the exponent becomes 0
-        results = this->multiplication (results, exp_base);
+    // decrement the exponent by 1
+    std::string curr_exp = this->subtraction(
+        exp_decrement_value,
+        exponent
+        );
 
-        // decrement the base to update it's value after multiplication
-        // operations has been done.
-        exponent = this->subtraction (exponent, exp_decrement_value);
-    }
+    // get the down tree exponents(this means, if we start with 2^7, the results from here will be
+    //  the results of 2^6)
+    std::string down_tree_exp = this->exponentiation(
+        exp_base,
+        curr_exp
+        );
 
-// return the results
-    return results;
+    // multiply the results of the subsequent exponents by the current base.
+    return this->multiplication(down_tree_exp, exp_base);
 }
 
 // division method calculator
@@ -510,8 +498,9 @@ std::string ArbitraryPrecisionCalculator::consumeHandleOps(std::deque<std::strin
             std::string num1 = pop_and_return (single_arithma);
             std::string ops = pop_and_return (single_arithma);
 
-            if(ops == "!")
+            if(ops == "!"){
                 single_arithma.push_back (this->factorial(num1));
+            }
 
         }
 
