@@ -9,13 +9,9 @@
 class ArbitraryPrecisionCalculator {
 
 public:
-    void display(const std::string &display_content);
-
     std::string consumeHandleOps(std::deque<std::string>& tokens);
 
     std::deque<std::string> reOrderFromLargeToSmall(std::string num1, std::string num2);
-
-    std::string strRev(const std::string& string_to_rev);
 
 
     std::string addition(std::string& num1, std::string& num2);

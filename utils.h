@@ -39,17 +39,18 @@ void print_deque(const std::deque<T>& deque) {
     std::cout << std::endl;
 }
 
-
-// Utility function to find the maximum element in a deque
-// template <typename T>
-// T find_max(const std::deque<T>& deque);
-
-
+// function to pad numbers with zeros
 std::string paddWithZeros(std::string &, int);
-
 
 int compare(std::string value_1, std::string value_2);
 
+// function to remove leading zeros
 std::string remove_leading_zeros(std::string target_value);
+
+// function to display output
+void display(const std::string &display_content);
+
+// define function to reverse numbers;
+std::string strRev(const std::string &string_to_rev);
 
 #endif // UTILS_H

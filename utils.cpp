@@ -19,16 +19,19 @@ int compare(std::string value_1, std::string value_2) {
 
 std::string remove_leading_zeros(std::string target_value) {
 
-    size_t pos = target_value.find_first_not_of("0");
+    size_t position = target_value.find_first_not_of("0");
 
-    return (pos == std::string::npos) ? "0" : target_value.substr(pos);
+    return (position == std::string::npos) ? "0" : target_value.substr(position);
 }
 
-// // Find the maximum element in a deque
-// template <typename T>
-// T find_max(const std::deque<T>& deque) {
-//     if (deque.empty()) {
-//         throw std::out_of_range("Deque is empty.");
-//     }
-//     return *std::max_element(deque.begin(), deque.end());
-// }
+// display function implementation
+void display(const std::string& display_content){
+    // display the content passed.
+    std::cout<<display_content<<std::endl;
+}
+
+// reverse string
+std::string strRev (const std::string& str_rev){
+    // Reverse the string
+    return std::string(str_rev.rbegin (), str_rev.rend ());
+}

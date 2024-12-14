@@ -6,6 +6,7 @@
 // dev cpp files
 #include "ArbitraryPrecisionCalculator.h"
 #include "tokenizer.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -40,8 +41,11 @@ public:
             auto processedOutput = MyCalculatorClass->consumeHandleOps(parsedInput);
 
             // Display the result
-            MyCalculatorClass->display(processedOutput);
+            display(processedOutput);
+
         } catch (const std::exception& e) {
+
+            // get the error with the error.what method call
             std::cout << "Error: " << e.what() << std::endl;
         }
     }
@@ -72,16 +76,5 @@ int main()
 {
 
     REPL MyREPL;
-    // Tokenizer *mytokenizer = new Tokenizer(target_ops);
-
-    // std::deque<std::string> tokens = mytokenizer->inputParser("5%3");
-    // 308*245
-        // deque<string> tokens = mytokenizer->inputParser ("30-5-6");
-
-    // ArbitraryPrecisionCalculator MyCalculatorClass;
-
-    // 25
-    // MyCalculatorClass.display (MyCalculatorClass.consumeHandleOps(tokens));
-
     return 0;
 }
