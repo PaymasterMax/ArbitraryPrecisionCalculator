@@ -18,7 +18,8 @@ class REPL {
     };
 
     void run(){
-        while (true){
+        int iterable = 0;
+        while (iterable <=4 ){
             std::string input = this->getCmdInput ();
 
             if(input == "exit")
@@ -28,6 +29,8 @@ class REPL {
             }
 
             this->process_input (input);
+
+            iterable++;
         }
     }
 
@@ -49,17 +52,17 @@ int main()
 {
     const std::deque<char> target_ops = {'+','-','*', '/','%','!', '^'};
 
-    // REPL MyREPL;
-    Tokenizer *mytokenizer = new Tokenizer(target_ops);
+    REPL MyREPL;
+    // Tokenizer *mytokenizer = new Tokenizer(target_ops);
 
-    std::deque<std::string> tokens = mytokenizer->inputParser("5%3");
+    // std::deque<std::string> tokens = mytokenizer->inputParser("5%3");
     // 308*245
         // deque<string> tokens = mytokenizer->inputParser ("30-5-6");
 
-    ArbitraryPrecisionCalculator MyCalculatorClass;
+    // ArbitraryPrecisionCalculator MyCalculatorClass;
 
     // 25
-    MyCalculatorClass.display (MyCalculatorClass.consumeHandleOps(tokens));
+    // MyCalculatorClass.display (MyCalculatorClass.consumeHandleOps(tokens));
 
     return 0;
 }
